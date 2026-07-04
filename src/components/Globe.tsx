@@ -1,9 +1,10 @@
-import React, { useRef, useMemo, useState, useEffect } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sphere, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { useAppStore, Station } from '../store';
-import { fetchInitialStations, fetchStationsForCountry } from '../services/radio';
+import { useAppStore } from '../store';
+import type { Station } from '../store';
+import { fetchInitialStations } from '../services/radio';
 
 // Helper to convert lat/lng to 3D vector
 const latLongToVector3 = (lat: number, lng: number, radius: number) => {

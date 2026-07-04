@@ -3,7 +3,7 @@ import { useAppStore } from '../store';
 import { Play, Pause, Volume2, VolumeX, AlertCircle, Loader2 } from 'lucide-react';
 
 export const Player = () => {
-  const { currentStation, isPlaying, togglePlay, volume, setVolume, setStation } = useAppStore();
+  const { currentStation, isPlaying, togglePlay, volume, setVolume } = useAppStore();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isBuffering, setIsBuffering] = useState(false);

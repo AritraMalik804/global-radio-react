@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Search, Globe2, RadioReceiver, MapPin, X } from 'lucide-react';
-import { useAppStore, Station } from '../store';
+import { useAppStore } from '../store';
+import type { Station } from '../store';
 import { Player } from './Player';
 import { fetchStationsForCountry } from '../services/radio';
 
 export const UI = () => {
-  const { currentStation, stationsByCountry, setStationsByCountry, setStation, activeCountry, setActiveCountry } = useAppStore();
+  const { currentStation, setStation, activeCountry, setActiveCountry } = useAppStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [countryStations, setCountryStations] = useState<Station[]>([]);

@@ -1,8 +1,6 @@
-import React from 'react';
 import Globe from './components/Globe';
 import { UI } from './components/UI';
 import { useAppStore } from './store';
-import { Loader2 } from 'lucide-react';
 
 function App() {
   const { isLoading } = useAppStore();

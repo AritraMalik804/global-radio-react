@@ -1,5 +1,6 @@
-import { RadioBrowserApi, Station } from 'radio-browser-api';
-import { Station as AppStation } from '../store';
+import { RadioBrowserApi } from 'radio-browser-api';
+import type { Station } from 'radio-browser-api';
+import type { Station as AppStation } from '../store';
 
 let api: RadioBrowserApi | null = null;
 
@@ -22,11 +23,10 @@ export const fetchStationsForCountry = async (countryCode: string, limit = 20): 
     const stations = await radioApi.searchStations({
       countryCode: countryCode,
       limit: limit,
-      order: 'clickcount',
+      order: 'clickcount' as any,
       reverse: true,
       hasGeoInfo: true,
-      hideBroken: true,
-      isHttps: true
+      hideBroken: true
     });
 
     return stations.map((s: Station) => ({
