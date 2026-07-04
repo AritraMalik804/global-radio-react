@@ -112,9 +112,11 @@ export const Player = () => {
             <>
               <span>{currentStation.country}</span>
               <span>•</span>
-              <span className="text-gradient font-semibold animate-ticker" style={{display: 'inline-block', minWidth: '100px'}}>
-                Live Broadcast
-              </span>
+              <div style={{ overflow: 'hidden', whiteSpace: 'nowrap', width: '120px', position: 'relative' }}>
+                <span className="text-gradient font-semibold animate-ticker" style={{display: 'inline-block'}}>
+                  Live Broadcast
+                </span>
+              </div>
             </>
           ) : (
             <span>Spin the globe to explore</span>

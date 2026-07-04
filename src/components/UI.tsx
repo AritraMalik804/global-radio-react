@@ -6,7 +6,7 @@ import { Player } from './Player';
 import { fetchStationsForCountry } from '../services/radio';
 
 export const UI = () => {
-  const { currentStation, setStation, activeCountry, setActiveCountry } = useAppStore();
+  const { currentStation, setStation, activeCountry, setActiveCountry, stations } = useAppStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [countryStations, setCountryStations] = useState<Station[]>([]);
@@ -47,7 +47,16 @@ export const UI = () => {
         </form>
 
         <div className="action-buttons">
-          <button className="icon-btn glass-panel" title="Random Station">
+          <button 
+            className="icon-btn glass-panel" 
+            title="Random Station"
+            onClick={() => {
+              if (stations.length > 0) {
+                const random = stations[Math.floor(Math.random() * stations.length)];
+                setStation(random);
+              }
+            }}
+          >
             <RadioReceiver size={20} />
           </button>
         </div>

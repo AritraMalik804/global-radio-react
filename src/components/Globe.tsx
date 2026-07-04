@@ -64,8 +64,7 @@ const Marker = ({ station, isActive, onClick }: { station: Station, isActive: bo
 
 const Earth = () => {
   const earthRef = useRef<THREE.Mesh>(null);
-  const { currentStation, setStation, setLoading } = useAppStore();
-  const [stations, setStations] = useState<Station[]>([]);
+  const { currentStation, setStation, setLoading, stations, setStations } = useAppStore();
 
   useEffect(() => {
     const init = async () => {
@@ -74,8 +73,10 @@ const Earth = () => {
       setStations(initial);
       setLoading(false);
     };
-    init();
-  }, [setLoading]);
+    if (stations.length === 0) {
+      init();
+    }
+  }, [setLoading, setStations, stations.length]);
 
   // Optional: load more when clicking on country, but for now we just show initial
 

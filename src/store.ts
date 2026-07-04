@@ -18,6 +18,7 @@ interface AppState {
   volume: number;
   isLoading: boolean;
   stationsByCountry: Record<string, Station[]>;
+  stations: Station[];
   activeCountry: string | null;
   
   setStation: (station: Station) => void;
@@ -25,6 +26,7 @@ interface AppState {
   setVolume: (volume: number) => void;
   setLoading: (loading: boolean) => void;
   setStationsByCountry: (country: string, stations: Station[]) => void;
+  setStations: (stations: Station[]) => void;
   setActiveCountry: (country: string | null) => void;
 }
 
@@ -34,6 +36,7 @@ export const useAppStore = create<AppState>((set) => ({
   volume: 0.7,
   isLoading: false,
   stationsByCountry: {},
+  stations: [],
   activeCountry: null,
 
   setStation: (station) => set({ currentStation: station, isPlaying: true }),
@@ -44,5 +47,6 @@ export const useAppStore = create<AppState>((set) => ({
     set((state) => ({ 
       stationsByCountry: { ...state.stationsByCountry, [country]: stations } 
     })),
+  setStations: (stations) => set({ stations }),
   setActiveCountry: (country) => set({ activeCountry: country }),
 }));
