@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, MessageSquare } from 'lucide-react';
+import { Send, MessageSquare, Trash2 } from 'lucide-react';
 import { useAppStore } from '../store';
 
 interface Message {
@@ -90,6 +90,32 @@ export const Chat = () => {
     }
   };
 
+  const deleteMessage = async (messageId: string) => {
+    if (!currentStation) return;
+    
+    // Optimistic UI update
+    setMessages(prev => prev.filter(msg => msg.id !== messageId));
+
+    try {
+      const res = await fetch('/.netlify/functions/deleteMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stationId: currentStation.id,
+          messageId,
+          username
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setMessages(data.messages);
+      }
+    } catch (e) {
+      console.error('Failed to delete message', e);
+      fetchMessages();
+    }
+  };
+
   if (!currentStation) return null;
 
   return (
@@ -115,7 +141,18 @@ export const Chat = () => {
               messages.map(msg => (
                 <div key={msg.id} className={`chat-message ${msg.username === username ? 'own' : ''}`}>
                   <span className="chat-username">{msg.username}</span>
-                  <p className="chat-text">{msg.text}</p>
+                  <div className="chat-bubble-container">
+                    <p className="chat-text">{msg.text}</p>
+                    {msg.username === username && (
+                      <button 
+                        className="delete-msg-btn"
+                        onClick={() => deleteMessage(msg.id)}
+                        title="Delete message"
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    )}
+                  </div>
                 </div>
               ))
             )}

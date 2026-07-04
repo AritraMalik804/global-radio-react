@@ -611,3 +611,27 @@ footer {
 .chat-input-form button:not(:disabled):hover {
   transform: scale(1.05);
 }
+
+.chat-bubble-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.delete-msg-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, color 0.2s;
+  padding: 0.2rem;
+}
+
+.chat-message:hover .delete-msg-btn {
+  opacity: 1;
+}
+
+.delete-msg-btn:hover {
+  color: #ef4444;
+}
