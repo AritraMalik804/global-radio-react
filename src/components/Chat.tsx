@@ -31,7 +31,7 @@ export const Chat = () => {
   const fetchMessages = async () => {
     if (!currentStation || !isOpen) return;
     try {
-      const res = await fetch(`/.netlify/functions/getMessages?stationId=${encodeURIComponent(currentStation.stationuuid)}`);
+      const res = await fetch(`/.netlify/functions/getMessages?stationId=${encodeURIComponent(currentStation.id)}`);
       if (res.ok) {
         const data = await res.json();
         setMessages(data);
@@ -46,7 +46,7 @@ export const Chat = () => {
     fetchMessages();
     const interval = setInterval(fetchMessages, 5000); // Poll every 5s
     return () => clearInterval(interval);
-  }, [currentStation?.stationuuid, isOpen]);
+  }, [currentStation?.id, isOpen]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -74,7 +74,7 @@ export const Chat = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          stationId: currentStation.stationuuid,
+          stationId: currentStation.id,
           message: msgText,
           username
         })
