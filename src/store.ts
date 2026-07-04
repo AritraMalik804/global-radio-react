@@ -20,6 +20,7 @@ interface AppState {
   stationsByCountry: Record<string, Station[]>;
   stations: Station[];
   activeCountry: string | null;
+  theme: 'light' | 'dark';
   
   setStation: (station: Station) => void;
   togglePlay: () => void;
@@ -28,6 +29,7 @@ interface AppState {
   setStationsByCountry: (country: string, stations: Station[]) => void;
   setStations: (stations: Station[]) => void;
   setActiveCountry: (country: string | null) => void;
+  toggleTheme: () => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -38,6 +40,7 @@ export const useAppStore = create<AppState>((set) => ({
   stationsByCountry: {},
   stations: [],
   activeCountry: null,
+  theme: 'light',
 
   setStation: (station) => set({ currentStation: station, isPlaying: true }),
   togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
@@ -49,4 +52,5 @@ export const useAppStore = create<AppState>((set) => ({
     })),
   setStations: (stations) => set({ stations }),
   setActiveCountry: (country) => set({ activeCountry: country }),
+  toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
 }));

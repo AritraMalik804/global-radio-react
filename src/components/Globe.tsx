@@ -64,7 +64,7 @@ const Marker = ({ station, isActive, onClick }: { station: Station, isActive: bo
 
 const Earth = () => {
   const earthRef = useRef<THREE.Mesh>(null);
-  const { currentStation, setStation, setLoading, stations, setStations } = useAppStore();
+  const { currentStation, setStation, setLoading, stations, setStations, theme } = useAppStore();
 
   useEffect(() => {
     const init = async () => {
@@ -80,8 +80,11 @@ const Earth = () => {
 
   // Optional: load more when clicking on country, but for now we just show initial
 
-  // Load a decent earth texture
-  const earthTexture = useMemo(() => new THREE.TextureLoader().load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg'), []);
+  // Load earth textures
+  const earthTextureLight = useMemo(() => new THREE.TextureLoader().load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg'), []);
+  const earthTextureDark = useMemo(() => new THREE.TextureLoader().load('https://unpkg.com/three-globe/example/img/earth-dark.jpg'), []);
+  
+  const activeTexture = theme === 'dark' ? earthTextureDark : earthTextureLight;
 
   useFrame(() => {
     if (earthRef.current && !currentStation) {
@@ -93,16 +96,22 @@ const Earth = () => {
     <group ref={earthRef}>
       <Sphere args={[2, 64, 64]}>
         <meshStandardMaterial 
-          map={earthTexture}
-          roughness={1.0}
-          metalness={0.0}
+          map={activeTexture}
+          roughness={theme === 'dark' ? 0.8 : 1.0}
+          metalness={theme === 'dark' ? 0.2 : 0.0}
           color="#ffffff"
         />
       </Sphere>
       
       {/* Atmosphere glow */}
       <Sphere args={[2.08, 32, 32]}>
-        <meshBasicMaterial color="#e8f0fe" transparent opacity={0.2} side={THREE.BackSide} blending={THREE.NormalBlending} />
+        <meshBasicMaterial 
+          color={theme === 'dark' ? "#1a457b" : "#e8f0fe"} 
+          transparent 
+          opacity={theme === 'dark' ? 0.15 : 0.2} 
+          side={THREE.BackSide} 
+          blending={theme === 'dark' ? THREE.AdditiveBlending : THREE.NormalBlending} 
+        />
       </Sphere>
 
       {stations.map((station) => (

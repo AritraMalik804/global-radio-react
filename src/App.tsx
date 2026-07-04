@@ -1,9 +1,18 @@
+import { useEffect } from 'react';
 import Globe from './components/Globe';
 import { UI } from './components/UI';
 import { useAppStore } from './store';
 
 function App() {
-  const { isLoading } = useAppStore();
+  const { isLoading, theme } = useAppStore();
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, [theme]);
 
   return (
     <>
