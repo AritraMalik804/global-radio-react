@@ -457,3 +457,157 @@ footer {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* Chat Widget */
+.chat-widget {
+  position: absolute;
+  bottom: 100px;
+  right: 1.5rem;
+  z-index: 50;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.chat-toggle {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  background: var(--glass-bg);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+.chat-toggle:hover {
+  transform: scale(1.05);
+}
+
+.chat-container {
+  width: 320px;
+  height: 400px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.chat-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--glass-border);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background: var(--glass-bg);
+}
+
+.chat-header h4 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--bg-color);
+}
+
+.no-messages {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  align-self: flex-start;
+}
+
+.chat-message.own {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.chat-username {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.1rem;
+}
+
+.chat-text {
+  background: var(--glass-bg);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+
+.chat-message.own .chat-text {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.chat-input-form {
+  display: flex;
+  padding: 0.75rem;
+  border-top: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+}
+
+.chat-input-form input {
+  flex: 1;
+  border: 1px solid var(--glass-border);
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  outline: none;
+  background: var(--bg-color);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  transition: border-color 0.2s;
+}
+
+.chat-input-form input:focus {
+  border-color: var(--accent);
+}
+
+.chat-input-form button {
+  background: var(--text-primary);
+  color: var(--bg-color);
+  border: none;
+  border-radius: 50%;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-left: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.chat-input-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.chat-input-form button:not(:disabled):hover {
+  transform: scale(1.05);
+}

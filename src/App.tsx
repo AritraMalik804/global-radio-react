@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Globe from './components/Globe';
 import { UI } from './components/UI';
+import { Chat } from './components/Chat';
 import { useAppStore } from './store';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <Globe />
       <div className="reticle"></div>
       <UI />
+      <Chat />
       
       {isLoading && (
         <div className="loader-wrapper">
