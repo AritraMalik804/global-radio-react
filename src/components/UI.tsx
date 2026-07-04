@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Search, Globe2, RadioReceiver, MapPin, X, Moon, Sun } from 'lucide-react';
+import { Search, Globe2, RadioReceiver, MapPin, X } from 'lucide-react';
 import { useAppStore } from '../store';
 import type { Station } from '../store';
 import { Player } from './Player';
 import { fetchStationsForCountry } from '../services/radio';
 
 export const UI = () => {
-  const { currentStation, setStation, activeCountry, setActiveCountry, stations, theme, toggleTheme } = useAppStore();
+  const { currentStation, setStation, activeCountry, setActiveCountry, stations } = useAppStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [countryStations, setCountryStations] = useState<Station[]>([]);
@@ -47,13 +47,6 @@ export const UI = () => {
         </form>
 
         <div className="action-buttons">
-          <button 
-            className="icon-btn glass-panel" 
-            title="Toggle Theme"
-            onClick={toggleTheme}
-          >
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
           <button 
             className="icon-btn glass-panel" 
             title="Random Station"

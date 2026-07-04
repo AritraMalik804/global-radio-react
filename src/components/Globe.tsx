@@ -64,7 +64,7 @@ const Marker = ({ station, isActive, onClick }: { station: Station, isActive: bo
 
 const Earth = () => {
   const earthRef = useRef<THREE.Mesh>(null);
-  const { currentStation, setStation, setLoading, stations, setStations, theme } = useAppStore();
+  const { currentStation, setStation, setLoading, stations, setStations } = useAppStore();
 
   useEffect(() => {
     const init = async () => {
@@ -80,15 +80,22 @@ const Earth = () => {
 
   // Optional: load more when clicking on country, but for now we just show initial
 
-  // Load earth textures
-  const earthTextureLight = useMemo(() => new THREE.TextureLoader().load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg'), []);
-  const earthTextureDark = useMemo(() => new THREE.TextureLoader().load('https://unpkg.com/three-globe/example/img/earth-dark.jpg'), []);
-  
-  const activeTexture = theme === 'dark' ? earthTextureDark : earthTextureLight;
+  // Load dark earth texture
+  const activeTexture = useMemo(() => new THREE.TextureLoader().load('https://unpkg.com/three-globe/example/img/earth-dark.jpg'), []);
 
-  useFrame(() => {
-    if (earthRef.current && !currentStation) {
-      earthRef.current.rotation.y += 0.0005; // Slow idle spin
+  useFrame((state) => {
+    if (currentStation && currentStation.geo_lat != null && currentStation.geo_long != null) {
+      const targetPos = latLongToVector3(currentStation.geo_lat, currentStation.geo_long, 6);
+      if (earthRef.current) {
+        targetPos.applyEuler(earthRef.current.rotation);
+      }
+      state.camera.position.lerp(targetPos, 0.05);
+      if (state.controls) {
+        // @ts-ignore
+        state.controls.update();
+      }
+    } else if (earthRef.current) {
+      earthRef.current.rotation.y += 0.001; // Auto-rotate if no station
     }
   });
 
@@ -97,8 +104,8 @@ const Earth = () => {
       <Sphere args={[2, 64, 64]}>
         <meshStandardMaterial 
           map={activeTexture}
-          roughness={theme === 'dark' ? 0.8 : 1.0}
-          metalness={theme === 'dark' ? 0.2 : 0.0}
+          roughness={0.8}
+          metalness={0.2}
           color="#ffffff"
         />
       </Sphere>
@@ -106,11 +113,11 @@ const Earth = () => {
       {/* Atmosphere glow */}
       <Sphere args={[2.08, 32, 32]}>
         <meshBasicMaterial 
-          color={theme === 'dark' ? "#1a457b" : "#e8f0fe"} 
+          color="#1a457b" 
           transparent 
-          opacity={theme === 'dark' ? 0.15 : 0.2} 
+          opacity={0.15} 
           side={THREE.BackSide} 
-          blending={theme === 'dark' ? THREE.AdditiveBlending : THREE.NormalBlending} 
+          blending={THREE.AdditiveBlending} 
         />
       </Sphere>
 
@@ -134,12 +141,10 @@ const Globe = () => {
         <directionalLight position={[5, 3, 5]} intensity={2.0} />
         <Earth />
         <OrbitControls 
+          makeDefault
           enablePan={false} 
-          enableZoom={true} 
-          minDistance={2.5} 
-          maxDistance={8} 
-          dampingFactor={0.05}
-          rotateSpeed={0.5}
+          minDistance={3} 
+          maxDistance={10} 
         />
       </Canvas>
     </div>

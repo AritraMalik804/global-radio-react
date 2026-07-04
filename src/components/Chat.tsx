@@ -10,7 +10,7 @@ interface Message {
 }
 
 export const Chat = () => {
-  const { currentStation, theme } = useAppStore();
+  const { currentStation } = useAppStore();
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [username, setUsername] = useState('Listener');
@@ -119,7 +119,7 @@ export const Chat = () => {
   if (!currentStation) return null;
 
   return (
-    <div className={`chat-widget ${isOpen ? 'open' : ''} ${theme}`}>
+    <div className={`chat-widget ${isOpen ? 'open' : ''}`}>
       <button 
         className="chat-toggle glass-panel" 
         onClick={() => setIsOpen(!isOpen)}
