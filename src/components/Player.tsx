@@ -88,11 +88,11 @@ export const Player = () => {
     <div className="player-container glass-panel">
       <button className="play-btn" onClick={togglePlay} disabled={!currentStation}>
         {isBuffering ? (
-          <Loader2 className="animate-spin text-slate-800" size={24} />
+          <Loader2 className="animate-spin" size={24} />
         ) : isPlaying ? (
-          <Pause className="text-slate-800" fill="currentColor" size={24} />
+          <Pause fill="currentColor" size={24} />
         ) : (
-          <Play className="text-slate-800 ml-1" fill="currentColor" size={24} />
+          <Play className="ml-1" fill="currentColor" size={24} />
         )}
       </button>
 
@@ -105,7 +105,7 @@ export const Player = () => {
         </div>
         <div className="station-meta">
           {error ? (
-            <span className="text-red-400 flex items-center gap-1">
+            <span style={{ color: '#ef4444' }} className="flex items-center gap-1">
               <AlertCircle size={14} /> {error}
             </span>
           ) : currentStation ? (

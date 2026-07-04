@@ -30,7 +30,7 @@ export const UI = () => {
       <header className="pointer-events-auto">
         <div className="header-title">
           <h1 className="text-gradient font-display flex items-center gap-2">
-            <Globe2 className="text-sky-400" /> GlobalRadio
+            <Globe2 style={{ color: 'var(--accent)' }} /> GlobalRadio
           </h1>
           <p>Live Spatial Tuning</p>
         </div>

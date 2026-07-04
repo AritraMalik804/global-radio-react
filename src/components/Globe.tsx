@@ -49,7 +49,7 @@ const Marker = ({ station, isActive, onClick }: { station: Station, isActive: bo
       onPointerOut={() => { setHover(false); document.body.style.cursor = 'auto'; }}
     >
       <sphereGeometry args={[isActive ? 0.04 : 0.02, 16, 16]} />
-      <meshBasicMaterial color={isActive ? "#38bdf8" : (hovered ? "#818cf8" : "#ffffff")} />
+      <meshBasicMaterial color={isActive ? "#c44d48" : (hovered ? "#e07a5f" : "#4a4a4a")} />
       
       {hovered && !isActive && (
         <Html position={[0, 0.1, 0]} center style={{ pointerEvents: 'none' }}>
@@ -81,7 +81,7 @@ const Earth = () => {
   // Optional: load more when clicking on country, but for now we just show initial
 
   // Load a decent earth texture
-  const earthTexture = useMemo(() => new THREE.TextureLoader().load('https://unpkg.com/three-globe/example/img/earth-dark.jpg'), []);
+  const earthTexture = useMemo(() => new THREE.TextureLoader().load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg'), []);
 
   useFrame(() => {
     if (earthRef.current && !currentStation) {
@@ -94,15 +94,15 @@ const Earth = () => {
       <Sphere args={[2, 64, 64]}>
         <meshStandardMaterial 
           map={earthTexture}
-          roughness={0.8}
-          metalness={0.2}
+          roughness={1.0}
+          metalness={0.0}
           color="#ffffff"
         />
       </Sphere>
       
       {/* Atmosphere glow */}
       <Sphere args={[2.08, 32, 32]}>
-        <meshBasicMaterial color="#1a457b" transparent opacity={0.15} side={THREE.BackSide} blending={THREE.AdditiveBlending} />
+        <meshBasicMaterial color="#e8f0fe" transparent opacity={0.2} side={THREE.BackSide} blending={THREE.NormalBlending} />
       </Sphere>
 
       {stations.map((station) => (
@@ -121,8 +121,8 @@ const Globe = () => {
   return (
     <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, zIndex: 1 }}>
       <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 3, 5]} intensity={1.5} />
+        <ambientLight intensity={1.5} />
+        <directionalLight position={[5, 3, 5]} intensity={2.0} />
         <Earth />
         <OrbitControls 
           enablePan={false} 
